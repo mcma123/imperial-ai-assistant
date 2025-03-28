@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { BarChart, LineChart, PieChart, Pie, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { CreditCard, DollarSign, TrendingUp, Users, Calendar, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { BarChart, LineChart, PieChart, Pie, Cell, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { CreditCard, DollarSign, TrendingUp, Users, Calendar, ArrowUpRight, ArrowDownRight, Sparkles } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import AppLayout from '@/components/layout/AppLayout';
 
@@ -175,7 +175,7 @@ const Dashboard = () => {
                       dataKey="value"
                     >
                       {expenseCategories.map((entry, index) => (
-                        <Pie
+                        <Cell
                           key={`cell-${index}`}
                           fill={COLORS[index % COLORS.length]}
                         />

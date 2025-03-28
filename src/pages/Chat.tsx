@@ -6,6 +6,7 @@ import AppLayout from '@/components/layout/AppLayout';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useToast } from '@/hooks/use-toast';
+import { getGroqChatCompletion } from '@/utils/groqService';
 
 interface Message {
   id: string;
@@ -27,13 +28,19 @@ const Chat = () => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const [conversationHistory, setConversationHistory] = useState<Array<{ role: "system" | "user" | "assistant"; content: string }>>([
+    {
+      role: "system",
+      content: "You are Agent Imperial, an AI assistant specialized in business, accounting, tax, and legal matters. Always provide professional, accurate, and concise answers. Your responses should be business-oriented and maintain a professional tone. If you don't know something, admit it clearly rather than providing incorrect information. Don't include phrases like 'As Agent Imperial' in your responses, just answer directly as if you are the expert."
+    }
+  ]);
 
   // Auto-scroll to bottom when new messages are added
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!input.trim()) return;
     
     // Add user message
@@ -47,29 +54,43 @@ const Chat = () => {
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsTyping(true);
+
+    // Update conversation history
+    const updatedHistory = [
+      ...conversationHistory,
+      { role: "user", content: input }
+    ];
+    setConversationHistory(updatedHistory);
     
-    // Simulate AI response after a delay
-    setTimeout(() => {
-      const aiResponses = [
-        "Based on current tax regulations, businesses in your sector can benefit from the Section 179 deduction for equipment purchases. This allows for immediate expensing rather than depreciation over time.",
-        "From an accounting perspective, I'd recommend considering the accrual method for your business type. It provides a more accurate picture of your financial position by recording revenues and expenses when they occur.",
-        "Your business strategy could benefit from a SWOT analysis to identify potential market opportunities. Would you like me to guide you through that process?",
-        "The legal structure you've described may have tax implications. S-corporations offer advantages for small businesses by avoiding double taxation while providing liability protection.",
-        "For your financial analysis, I'd suggest focusing on these key metrics: operating margin, cash conversion cycle, and customer acquisition cost. These will give you insights into operational efficiency."
-      ];
+    try {
+      // Get AI response from Groq
+      const aiResponse = await getGroqChatCompletion(updatedHistory);
       
-      const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
-      
+      // Add AI message
       const aiMessage: Message = {
         id: Date.now().toString(),
-        content: randomResponse,
+        content: aiResponse,
         sender: 'ai',
         timestamp: new Date()
       };
       
       setMessages(prev => [...prev, aiMessage]);
+      
+      // Update conversation history with AI response
+      setConversationHistory(prev => [
+        ...prev,
+        { role: "assistant", content: aiResponse }
+      ]);
+    } catch (error) {
+      console.error("Error getting AI response:", error);
+      toast({
+        title: "Connection Error",
+        description: "Unable to connect to AI service. Please try again later.",
+        variant: "destructive"
+      });
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -80,12 +101,21 @@ const Chat = () => {
   };
 
   const clearChat = () => {
+    // Reset messages
     setMessages([
       {
         id: Date.now().toString(),
         content: 'Hello, I am Agent Imperial. How can I assist you with business, accounting, tax, or legal matters today?',
         sender: 'ai',
         timestamp: new Date()
+      }
+    ]);
+    
+    // Reset conversation history
+    setConversationHistory([
+      {
+        role: "system",
+        content: "You are Agent Imperial, an AI assistant specialized in business, accounting, tax, and legal matters. Always provide professional, accurate, and concise answers. Your responses should be business-oriented and maintain a professional tone. If you don't know something, admit it clearly rather than providing incorrect information. Don't include phrases like 'As Agent Imperial' in your responses, just answer directly as if you are the expert."
       }
     ]);
     

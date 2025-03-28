@@ -4,6 +4,7 @@ import Groq from "groq-sdk";
 // Initialize Groq client with API key
 const groq = new Groq({
   apiKey: "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",
+  dangerouslyAllowBrowser: true // Required flag for browser environments
 });
 
 export const getGroqChatCompletion = async (messages: Array<{ role: "system" | "user" | "assistant"; content: string }>) => {

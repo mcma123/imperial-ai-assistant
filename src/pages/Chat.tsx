@@ -15,6 +15,13 @@ interface Message {
   timestamp: Date;
 }
 
+type MessageRole = "system" | "user" | "assistant";
+
+interface ConversationMessage {
+  role: MessageRole;
+  content: string;
+}
+
 const Chat = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -28,7 +35,7 @@ const Chat = () => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
-  const [conversationHistory, setConversationHistory] = useState<Array<{ role: "system" | "user" | "assistant"; content: string }>>([
+  const [conversationHistory, setConversationHistory] = useState<ConversationMessage[]>([
     {
       role: "system",
       content: "You are Agent Imperial, an AI assistant specialized in business, accounting, tax, and legal matters. Always provide professional, accurate, and concise answers. Your responses should be business-oriented and maintain a professional tone. If you don't know something, admit it clearly rather than providing incorrect information. Don't include phrases like 'As Agent Imperial' in your responses, just answer directly as if you are the expert."
@@ -56,7 +63,7 @@ const Chat = () => {
     setIsTyping(true);
 
     // Update conversation history
-    const updatedHistory = [
+    const updatedHistory: ConversationMessage[] = [
       ...conversationHistory,
       { role: "user", content: input }
     ];

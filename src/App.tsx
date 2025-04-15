@@ -11,6 +11,7 @@ import Specializations from "./pages/Specializations";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import CRM from "./pages/CRM";
 
 // Force dark mode
 document.documentElement.classList.add('dark');
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/specializations" element={<Specializations />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/crm" element={<CRM />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

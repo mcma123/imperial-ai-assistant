@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Home, Settings, MessageSquare, BarChart3, User, Lightbulb } from 'lucide-react';
+import { Menu, X, Home, Settings, MessageSquare, BarChart3, User, Lightbulb, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Logo from '@/components/common/Logo';
 
@@ -22,6 +22,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     { icon: Home, name: 'Home', path: '/' },
     { icon: MessageSquare, name: 'Chat', path: '/chat' },
     { icon: BarChart3, name: 'Dashboard', path: '/dashboard' },
+    { icon: Users, name: 'CRM', path: '/crm' },
     { icon: Lightbulb, name: 'Specializations', path: '/specializations' },
     { icon: User, name: 'Profile', path: '/profile' },
     { icon: Settings, name: 'Settings', path: '/settings' },

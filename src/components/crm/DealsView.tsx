@@ -129,7 +129,7 @@ const DealsView: React.FC<DealsViewProps> = ({ customers }) => {
                 <XAxis dataKey="name" stroke="#9F9EA1" />
                 <YAxis yAxisId="left" orientation="left" stroke="#9F9EA1" />
                 <YAxis yAxisId="right" orientation="right" stroke="#9F9EA1" tickFormatter={currencyFormatter} />
-                <Tooltip content={(props) => <ChartTooltipContent {...props} />} />
+                <ChartTooltip content={(props) => <ChartTooltipContent {...props} />} />
                 <Legend />
                 <Bar yAxisId="left" dataKey="value" name="Deals" fill="var(--color-deals)" />
                 <Bar yAxisId="right" dataKey="amount" name="Amount" fill="var(--color-amount)" />
@@ -158,7 +158,7 @@ const DealsView: React.FC<DealsViewProps> = ({ customers }) => {
                 <CartesianGrid strokeDasharray="3 3" stroke="#333" />
                 <XAxis dataKey="name" stroke="#9F9EA1" />
                 <YAxis tickFormatter={currencyFormatter} stroke="#9F9EA1" />
-                <Tooltip content={(props) => <ChartTooltipContent {...props} />} />
+                <ChartTooltip content={(props) => <ChartTooltipContent {...props} />} />
                 <Line 
                   type="monotone" 
                   dataKey="amount" 

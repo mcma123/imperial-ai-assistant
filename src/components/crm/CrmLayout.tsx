@@ -1,17 +1,24 @@
 
 import React, { ReactNode } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import CustomerList from './CustomerList';
+import LeadsView from './LeadsView';
+import DealsView from './DealsView';
+import ActivitiesView from './ActivitiesView';
+import { Customer } from '@/types/crm';
 
 interface CrmLayoutProps {
   title: string;
   subtitle: string;
   children: ReactNode;
+  customers: Customer[];
 }
 
 const CrmLayout: React.FC<CrmLayoutProps> = ({ 
   title, 
   subtitle, 
-  children 
+  children,
+  customers 
 }) => {
   return (
     <div className="p-4 sm:p-6 lg:p-8 bg-imperial-black min-h-screen circuit-bg">
@@ -29,28 +36,19 @@ const CrmLayout: React.FC<CrmLayoutProps> = ({
         </TabsList>
         
         <TabsContent value="customers">
-          {children}
+          <CustomerList customers={customers} />
         </TabsContent>
         
         <TabsContent value="leads">
-          <div className="bg-imperial-dark-purple p-6 rounded-lg border border-imperial-silver/10">
-            <h3 className="text-xl font-medium text-imperial-silver mb-4">Lead Management</h3>
-            <p className="text-imperial-silver/70">Track and manage your leads here.</p>
-          </div>
+          <LeadsView customers={customers} />
         </TabsContent>
         
         <TabsContent value="deals">
-          <div className="bg-imperial-dark-purple p-6 rounded-lg border border-imperial-silver/10">
-            <h3 className="text-xl font-medium text-imperial-silver mb-4">Deal Pipeline</h3>
-            <p className="text-imperial-silver/70">Track your sales pipeline and ongoing deals.</p>
-          </div>
+          <DealsView customers={customers} />
         </TabsContent>
         
         <TabsContent value="activities">
-          <div className="bg-imperial-dark-purple p-6 rounded-lg border border-imperial-silver/10">
-            <h3 className="text-xl font-medium text-imperial-silver mb-4">Recent Activities</h3>
-            <p className="text-imperial-silver/70">View all customer interactions and scheduled activities.</p>
-          </div>
+          <ActivitiesView customers={customers} />
         </TabsContent>
       </Tabs>
     </div>

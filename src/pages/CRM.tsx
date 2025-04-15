@@ -2,7 +2,6 @@
 import React from 'react';
 import AppLayout from '@/components/layout/AppLayout';
 import CrmLayout from '@/components/crm/CrmLayout';
-import CustomerList from '@/components/crm/CustomerList';
 import { customerData } from '@/data/crmData';
 
 const CRM: React.FC = () => {
@@ -11,8 +10,9 @@ const CRM: React.FC = () => {
       <CrmLayout 
         title="Customer Relationship Management"
         subtitle="Manage your customer relationships and interactions"
+        customers={customerData}
       >
-        <CustomerList customers={customerData} />
+        {/* Content will be managed by the tabs */}
       </CrmLayout>
     </AppLayout>
   );

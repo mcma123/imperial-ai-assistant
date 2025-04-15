@@ -11,6 +11,7 @@ const CRM: React.FC = () => {
         title="Customer Relationship Management"
         subtitle="Manage your customer relationships and interactions"
         customers={customerData}
+        children={null}  // Explicitly add children to satisfy TypeScript
       >
         {/* Empty children element to satisfy the props requirement */}
       </CrmLayout>

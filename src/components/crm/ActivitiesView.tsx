@@ -161,7 +161,7 @@ const ActivitiesView: React.FC<ActivitiesViewProps> = ({ customers }) => {
                 <CartesianGrid strokeDasharray="3 3" stroke="#333" />
                 <XAxis dataKey="name" stroke="#9F9EA1" />
                 <YAxis stroke="#9F9EA1" />
-                <ChartTooltip content={(props) => <ChartTooltipContent {...props} />} />
+                <Tooltip />
                 <Bar dataKey="count" name="Activities" fill="var(--color-activities)" />
               </BarChart>
             </ChartContainer>

@@ -12,7 +12,7 @@ const CRM: React.FC = () => {
         subtitle="Manage your customer relationships and interactions"
         customers={customerData}
       >
-        {/* Content will be managed by the tabs */}
+        {/* Empty children element to satisfy the props requirement */}
       </CrmLayout>
     </AppLayout>
   );

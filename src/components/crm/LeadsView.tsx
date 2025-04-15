@@ -130,7 +130,7 @@ const LeadsView: React.FC<LeadsViewProps> = ({ customers }) => {
               <BarChart data={leadStatusData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                 <XAxis dataKey="name" stroke="#9F9EA1" />
                 <YAxis stroke="#9F9EA1" />
-                <ChartTooltip content={(props) => <ChartTooltipContent {...props} />} />
+                <Tooltip />
                 <Bar dataKey="count" name="Leads" fill="var(--color-lead)" />
               </BarChart>
             </ChartContainer>
